@@ -1,5 +1,5 @@
 import { companies } from './mockData';
-import { Company } from '../types';
+import { type Company } from '../types';
 
 const ARTIFICIAL_DELAY_MS = 800;
 

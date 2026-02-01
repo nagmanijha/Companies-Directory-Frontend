@@ -2,7 +2,7 @@ import { Search, RotateCcw } from 'lucide-react';
 import { Input } from '../common/Input';
 import { Select } from '../common/Select';
 import { Button } from '../common/Button';
-import { CompanyFilters, SortField, SortOrder } from '../../types';
+import { type CompanyFilters, type SortField, type SortOrder } from '../../types';
 
 interface FilterBarProps {
     filters: CompanyFilters;

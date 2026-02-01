@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
-import { CompanyFilters, SortField, SortOrder } from '../types';
+import { useState, useEffect } from 'react';
+import { type CompanyFilters, type SortField, type SortOrder } from '../types';
 
 export const useUrlSync = (
     initialFilters: CompanyFilters,

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Company, CompanyFilters, SortField, SortOrder } from '../types';
+import { type Company, type CompanyFilters, type SortField, type SortOrder } from '../types';
 
 export const useDataEngine = (
     companies: Company[],

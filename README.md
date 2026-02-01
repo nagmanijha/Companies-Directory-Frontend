@@ -1,73 +1,57 @@
-# React + TypeScript + Vite
+# Companies Directory Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A production-ready React application for browsing and filtering companies, built with modern best practices.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Responsive Design**: Table view for desktop, Card view for mobile.
+- **Advanced Filtering**: Filter by Industry, Location, and Search by Name (debounced).
+- **Sorting**: Sort by Name or Founded Year.
+- **Client-side Pagination**: Dynamic page size and navigation.
+- **URL Synchronization**: Shareable URLs with filter state preserved.
+- **Mock API**: Simulated async data fetching with realistic delay.
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 18** (Functional Components, Hooks)
+- **TypeScript** (Strict Mode, Type Safety)
+- **Vite** (Fast Build Tool)
+- **Tailwind CSS** (Utility-first Styling)
+- **Lucide React** (Icons)
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── components/
+│   ├── common/       # Reusable primitives (Button, Input, Badge...)
+│   ├── features/     # Domain components (CompanyTable, FilterBar...)
+│   └── layout/       # App shell (Header, MainLayout)
+├── hooks/            # Custom logic (useCompanies, useUrlSync...)
+├── services/         # API abstraction (mocked)
+├── types/            # TS Interfaces
+└── utils/            # Helpers (cn)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+2. **Run Development Server**
+   ```bash
+   npm run dev
+   ```
+
+3. **Build for Production**
+   ```bash
+   npm run build
+   ```
+
+## Development Decisions
+
+- **URL Sync**: Implemented `useUrlSync` hook to treat the URL as a source of truth for filters, improving UX.
+- **Accessibility**: Used semantic HTML (`table`, `select`, `button`) and managing focus states.
+- **Performance**: Debounced search input to prevent excessive processing/re-renders.

@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useMemo, useEffect } from 'react';
 import { MainLayout } from './components/layout/MainLayout';
 import { FilterBar } from './components/features/FilterBar';
 import { CompanyTable } from './components/features/CompanyTable';
@@ -9,35 +9,39 @@ import { EmptyState } from './components/common/EmptyState';
 import { useCompanies } from './hooks/useCompanies';
 import { useDataEngine } from './hooks/useDataEngine';
 import { useDebounce } from './hooks/useDebounce';
-import { CompanyFilters, SortField, SortOrder } from './types';
+import { useUrlSync } from './hooks/useUrlSync';
+import { type CompanyFilters, type SortField } from './types';
 import { AlertCircle } from 'lucide-react';
 import { Button } from './components/common/Button';
 
 function App() {
   const { companies, loading, error, industries, locations, refetch } = useCompanies();
 
-  // State
-  const [filters, setFilters] = useState<CompanyFilters>({
-    search: '',
-    industry: 'All',
-    location: 'All'
-  });
-
-  const [sort, setSort] = useState<{ field: SortField; order: SortOrder }>({
-    field: 'name',
-    order: 'asc'
-  });
-
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  // State with URL Sync
+  const {
+    filters,
+    setFilters,
+    sort,
+    setSort,
+    page,
+    setPage,
+    pageSize,
+    setPageSize
+  } = useUrlSync(
+    { search: '', industry: 'All', location: 'All' },
+    { field: 'name', order: 'asc' },
+    1,
+    10
+  );
 
   // Debounce search for performance
   const debouncedSearch = useDebounce(filters.search, 300);
 
   const effectiveFilters = useMemo(() => ({
-    ...filters,
-    search: debouncedSearch
-  }), [filters.industry, filters.location, debouncedSearch]);
+    search: debouncedSearch,
+    industry: filters.industry,
+    location: filters.location
+  }), [debouncedSearch, filters.industry, filters.location]);
 
   // Data Engine
   const { data: paginatedCompanies, totalCount, totalPages } = useDataEngine(

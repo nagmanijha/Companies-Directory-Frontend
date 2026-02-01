@@ -1,5 +1,5 @@
 import { MapPin, Users, Calendar, ChevronRight } from 'lucide-react';
-import { Company } from '../../types';
+import { type Company } from '../../types';
 import { Badge } from '../common/Badge';
 
 interface CompanyCardProps {

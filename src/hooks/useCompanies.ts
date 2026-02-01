@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Company } from '../types';
+import { useState, useEffect, useCallback } from 'react';
+import { type Company } from '../types';
 import { fetchCompanies, getIndustries, getLocations } from '../services/api';
 
 export const useCompanies = () => {
@@ -9,7 +9,7 @@ export const useCompanies = () => {
     const [industries, setIndustries] = useState<string[]>([]);
     const [locations, setLocations] = useState<string[]>([]);
 
-    const loadData = async () => {
+    const loadData = useCallback(async () => {
         setLoading(true);
         setError(null);
         try {
@@ -17,12 +17,12 @@ export const useCompanies = () => {
             setCompanies(data);
             setIndustries(getIndustries());
             setLocations(getLocations());
-        } catch (err) {
+        } catch {
             setError('Failed to fetch companies. Please try again.');
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
 
     useEffect(() => {
         loadData();
