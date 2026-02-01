@@ -9,10 +9,15 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
 
 export const Select = ({ className, options, placeholder, ...props }: SelectProps) => {
     return (
-        <div className="relative">
+        <div className="relative group">
             <select
                 className={cn(
-                    'flex h-10 w-full appearance-none rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50 pr-8',
+                    'flex h-9 w-full appearance-none rounded-md border border-slate-200 bg-white px-3 py-1 text-sm text-slate-900',
+                    'transition-all duration-200',
+                    'focus:outline-none focus:border-slate-400 focus:ring-4 focus:ring-slate-100',
+                    'hover:border-slate-300',
+                    'disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-500',
+                    'pr-8', // Space for chevron
                     className
                 )}
                 {...props}
@@ -24,7 +29,7 @@ export const Select = ({ className, options, placeholder, ...props }: SelectProp
                     </option>
                 ))}
             </select>
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none group-hover:text-slate-600 transition-colors" />
         </div>
     );
 };

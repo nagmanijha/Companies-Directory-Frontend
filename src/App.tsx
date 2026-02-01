@@ -81,10 +81,12 @@ function App() {
     <MainLayout>
       <div className="space-y-6">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900">Companies</h1>
-          <span className="text-sm text-gray-500">
-            {loading ? 'Loading...' : `${companies.length} companies available`}
-          </span>
+          <h1 className="text-3xl font-bold tracking-tight text-slate-900">Companies</h1>
+          {!loading && (
+            <span className="text-sm font-medium text-slate-500 bg-white px-3 py-1 rounded-full border border-slate-200 shadow-sm">
+              {companies.length} Total
+            </span>
+          )}
         </div>
 
         <FilterBar
@@ -98,18 +100,18 @@ function App() {
         />
 
         {error && (
-          <div className="rounded-md bg-red-50 p-4">
+          <div className="rounded-xl border border-red-100 bg-red-50 p-4 animate-in fade-in slide-in-from-top-2">
             <div className="flex">
               <div className="flex-shrink-0">
-                <AlertCircle className="h-5 w-5 text-red-400" aria-hidden="true" />
+                <AlertCircle className="h-5 w-5 text-red-500" aria-hidden="true" />
               </div>
               <div className="ml-3">
                 <h3 className="text-sm font-medium text-red-800">Error loading data</h3>
-                <div className="mt-2 text-sm text-red-700">
+                <div className="mt-1 text-sm text-red-700">
                   <p>{error}</p>
                 </div>
-                <div className="mt-4">
-                  <Button size="sm" onClick={refetch} variant="outline" className="bg-red-50 text-red-800 border-red-200 hover:bg-red-100">
+                <div className="mt-3">
+                  <Button size="sm" onClick={refetch} variant="outline" className="bg-white text-red-700 border-red-200 hover:bg-red-50">
                     Try again
                   </Button>
                 </div>
@@ -120,22 +122,42 @@ function App() {
 
         {loading ? (
           <div className="space-y-4">
-            <Skeleton className="h-12 w-full" />
-            <Skeleton className="h-64 w-full" />
+            {/* Realistic Skeleton Loading */}
+            <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+              <div className="flex items-center space-x-4 mb-6">
+                <Skeleton className="h-12 w-12 rounded-lg" />
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-48" />
+                  <Skeleton className="h-3 w-32" />
+                </div>
+              </div>
+              <div className="space-y-3">
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-5/6" />
+              </div>
+            </div>
+            <Skeleton className="h-24 w-full rounded-xl" />
           </div>
         ) : (
           <>
             {paginatedCompanies.length === 0 ? (
-              <EmptyState onReset={handleReset} />
+              <EmptyState onAction={handleReset} />
             ) : (
-              <>
+              <div className="space-y-4">
+                {/* Result Count Header */}
+                <div className="flex items-center justify-between px-1">
+                  <h2 className="text-xs font-bold uppercase tracking-widest text-slate-500">
+                    {totalCount} Companies Found
+                  </h2>
+                </div>
+
                 {/* Desktop View */}
-                <div className="hidden lg:block">
+                <div className="hidden lg:block animate-in fade-in duration-500">
                   <CompanyTable companies={paginatedCompanies} />
                 </div>
 
                 {/* Mobile View */}
-                <div className="grid grid-cols-1 gap-4 lg:hidden sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 lg:hidden sm:grid-cols-2 animate-in fade-in duration-500">
                   {paginatedCompanies.map(company => (
                     <CompanyCard key={company.id} company={company} />
                   ))}
@@ -145,14 +167,14 @@ function App() {
                   currentPage={page}
                   totalPages={totalPages}
                   pageSize={pageSize}
-                  totalCount={totalCount}
+                  totalItems={totalCount}
                   onPageChange={setPage}
                   onPageSizeChange={(size) => {
                     setPageSize(size);
                     setPage(1);
                   }}
                 />
-              </>
+              </div>
             )}
           </>
         )}

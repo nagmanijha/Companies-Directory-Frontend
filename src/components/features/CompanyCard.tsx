@@ -8,43 +8,41 @@ interface CompanyCardProps {
 
 export const CompanyCard = ({ company }: CompanyCardProps) => {
     return (
-        <div className="flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-all hover:shadow-md">
-            <div className="flex items-start justify-between">
-                <div className="flex items-center gap-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-50 font-bold text-blue-600 ring-1 ring-blue-100">
+        <div className="group relative rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:border-slate-300">
+            <div className="mb-4 flex items-start justify-between">
+                <div className="flex items-center gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-slate-50 border border-slate-100 text-lg font-bold text-slate-700 shadow-sm">
                         {company.name.charAt(0)}
                     </div>
                     <div>
-                        <h3 className="font-semibold text-gray-900">{company.name}</h3>
-                        <span className="text-sm text-gray-500">{company.industry}</span>
+                        <h3 className="font-bold text-slate-900">{company.name}</h3>
+                        <Badge variant="purple" className="mt-1 text-[10px] uppercase tracking-wider">
+                            {company.industry}
+                        </Badge>
                     </div>
                 </div>
-                <ChevronRight className="h-5 w-5 text-gray-400" />
-            </div>
-
-            <div className="mt-2 space-y-2">
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <MapPin className="h-4 w-4 text-gray-400" />
-                    <span>{company.location}</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Users className="h-4 w-4 text-gray-400" />
-                    <span>{company.size} employees</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Calendar className="h-4 w-4 text-gray-400" />
-                    <span>Founded {company.founded}</span>
+                <div className="rounded-full p-1 text-slate-300 transition-colors group-hover:bg-slate-50 group-hover:text-slate-600">
+                    <ChevronRight className="h-5 w-5" />
                 </div>
             </div>
 
-            <div className="mt-2 text-sm text-gray-500 line-clamp-2">
+            <p className="mb-4 text-sm text-slate-500 line-clamp-2">
                 {company.description}
-            </div>
+            </p>
 
-            <div className="mt-auto">
-                <Badge variant="info" className="uppercase tracking-wider font-semibold opacity-80">
-                    {company.industry}
-                </Badge>
+            <div className="grid grid-cols-2 gap-y-2 gap-x-4 border-t border-slate-50 pt-4">
+                <div className="flex items-center text-sm text-slate-600">
+                    <MapPin className="mr-2 h-4 w-4 text-slate-400" />
+                    {company.location}
+                </div>
+                <div className="flex items-center text-sm text-slate-600">
+                    <Users className="mr-2 h-4 w-4 text-slate-400" />
+                    {company.size}
+                </div>
+                <div className="col-span-2 flex items-center text-sm text-slate-600">
+                    <Calendar className="mr-2 h-4 w-4 text-slate-400" />
+                    Founded {company.founded}
+                </div>
             </div>
         </div>
     );
